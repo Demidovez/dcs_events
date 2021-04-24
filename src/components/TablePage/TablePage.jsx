@@ -6,9 +6,40 @@ import reloadIcon from "../../assets/reload.svg";
 import settingIcon from "../../assets/setting.svg";
 import downloadIcon from "../../assets/download.svg";
 import saveIcon from "../../assets/save.svg";
+import ResizableTitle from "../ResizableTitle/ResizableTitle";
+import { useState } from "react";
 const { Option } = Select;
 
 const TablePage = () => {
+  const [columnsData, setColumnsData] = useState({ columns: demo.columns });
+
+  const handleResize = (index) => (e, { size }) => {
+    setColumnsData(({ columns }) => {
+      const nextColumns = [...columns];
+
+      nextColumns[index] = {
+        ...nextColumns[index],
+        width: size.width,
+      };
+
+      return { columns: nextColumns };
+    });
+  };
+
+  const columns = columnsData.columns.map((col, index) => ({
+    ...col,
+    onHeaderCell: (column) => ({
+      width: column.width,
+      onResize: handleResize(index),
+    }),
+  }));
+
+  const components = {
+    header: {
+      cell: ResizableTitle,
+    },
+  };
+
   return (
     <div className="table-page-component">
       <h1>События системы APKS</h1>
@@ -42,10 +73,11 @@ const TablePage = () => {
       </div>
       <Table
         dataSource={demo.data}
-        columns={demo.columns}
+        columns={columns}
         size="small"
         bordered
         pagination={false}
+        components={components}
       />
       <div className="more">
         <Button type="primary">Показать еще</Button>

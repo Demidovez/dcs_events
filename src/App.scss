@@ -9,3 +9,18 @@ body {
   border-radius: 6px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
+
+.react-resizable {
+  position: relative;
+  background-clip: padding-box;
+}
+
+.react-resizable-handle {
+  position: absolute;
+  right: -5px;
+  bottom: 0;
+  z-index: 1;
+  width: 10px;
+  height: 100%;
+  cursor: col-resize;
+}
