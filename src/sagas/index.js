@@ -1,8 +1,8 @@
 import { all } from "redux-saga/effects";
-import problemsSagas from "./problemsSagas";
+import eventsSagas from "./eventsSagas";
 
 function* rootSaga() {
-  yield all([problemsSagas()]);
+  yield all([eventsSagas()]);
 }
 
 export default rootSaga;

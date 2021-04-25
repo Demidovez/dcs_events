@@ -1,45 +1,14 @@
-import { Table, Select, Button } from "antd";
-import demo from "./demo";
+import { Select, Button } from "antd";
 import "./TablePage.scss";
 import closeIcon from "../../assets/close.svg";
 import reloadIcon from "../../assets/reload.svg";
 import settingIcon from "../../assets/setting.svg";
-import downloadIcon from "../../assets/download.svg";
 import saveIcon from "../../assets/save.svg";
-import ResizableTitle from "../ResizableTitle/ResizableTitle";
-import { useState } from "react";
+import TableEvents from "../TableEvents/TableEvents";
+import SaveExcelButton from "../SaveExcelButton/SaveExcelButton";
 const { Option } = Select;
 
 const TablePage = () => {
-  const [columnsData, setColumnsData] = useState({ columns: demo.columns });
-
-  const handleResize = (index) => (e, { size }) => {
-    setColumnsData(({ columns }) => {
-      const nextColumns = [...columns];
-
-      nextColumns[index] = {
-        ...nextColumns[index],
-        width: size.width,
-      };
-
-      return { columns: nextColumns };
-    });
-  };
-
-  const columns = columnsData.columns.map((col, index) => ({
-    ...col,
-    onHeaderCell: (column) => ({
-      width: column.width,
-      onResize: handleResize(index),
-    }),
-  }));
-
-  const components = {
-    header: {
-      cell: ResizableTitle,
-    },
-  };
-
   return (
     <div className="table-page-component">
       <h1>События системы APKS</h1>
@@ -67,18 +36,11 @@ const TablePage = () => {
           <img src={closeIcon} alt="" className="close" />
           <img src={reloadIcon} alt="" />
           <img src={saveIcon} alt="" />
-          <img src={downloadIcon} alt="" />
+          <SaveExcelButton />
           <img src={settingIcon} alt="" />
         </div>
       </div>
-      <Table
-        dataSource={demo.data}
-        columns={columns}
-        size="small"
-        bordered
-        pagination={false}
-        components={components}
-      />
+      <TableEvents />
       <div className="more">
         <Button type="primary">Показать еще</Button>
         31 <span>из</span> 345
