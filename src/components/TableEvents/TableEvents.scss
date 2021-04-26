@@ -1,0 +1,27 @@
+.table-events-component {
+  .more {
+    display: flex;
+    align-items: center;
+    color: gray;
+    margin-top: 20px;
+
+    button {
+      margin-right: 20px;
+      border-radius: 6px;
+      height: 37px;
+      min-width: 125px;
+
+      & > .ant-spin {
+        color: white;
+
+        span {
+          margin-top: 3px;
+        }
+      }
+    }
+
+    & > span {
+      margin: 0 10px;
+    }
+  }
+}

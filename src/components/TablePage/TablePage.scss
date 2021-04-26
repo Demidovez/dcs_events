@@ -1,7 +1,18 @@
 .table-page-component {
+  margin-bottom: 40px;
+
   h1 {
     margin-top: 15px;
     font-size: 20px;
+  }
+
+  .loader {
+    margin: 100px 0;
+    text-align: center;
+
+    span {
+      font-size: 45px;
+    }
   }
 
   .controls {
@@ -10,10 +21,17 @@
     justify-content: space-between;
     margin-bottom: 15px;
 
-    p {
+    p,
+    .count-found {
       margin-bottom: 0;
       color: gray;
       display: inline-block;
+    }
+
+    .count-found {
+      .ant-spin {
+        margin-right: 10px;
+      }
     }
 
     .buttons {
@@ -38,40 +56,26 @@
         border-radius: 6px;
       }
 
-      & > img {
-        width: 22px;
-        height: 22px;
-        cursor: pointer;
-        opacity: 0.7;
-        transition: all 0.2s ease-in;
-        margin-left: 20px;
+      & > button {
+        background-color: transparent;
+        border: none;
+        margin-left: 10px;
 
-        &:hover {
-          opacity: 1;
-        }
+        & > img {
+          width: 22px;
+          height: 22px;
+          opacity: 0.7;
+          transition: all 0.2s ease-in;
+          &:hover {
+            opacity: 1;
+          }
 
-        &.close {
-          width: 20px;
-          height: 20px;
+          &.close {
+            width: 20px;
+            height: 20px;
+          }
         }
       }
-    }
-  }
-
-  .more {
-    display: flex;
-    align-items: center;
-    color: gray;
-    margin-top: 20px;
-
-    button {
-      margin-right: 20px;
-      border-radius: 6px;
-      height: 37px;
-    }
-
-    & > span {
-      margin: 0 10px;
     }
   }
 }

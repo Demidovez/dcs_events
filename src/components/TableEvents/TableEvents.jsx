@@ -1,7 +1,10 @@
-import { Table } from "antd";
+import { Table, Button, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import ResizableTitle from "../ResizableTitle/ResizableTitle";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMoreEventsAction } from "../../actions/creators/eventsActionCreators";
+import "./TableEvents.scss";
 
 const components = {
   header: {
@@ -10,9 +13,20 @@ const components = {
 };
 
 const TableEvents = () => {
-  const { columns, data } = useSelector((state) => state.events);
+  const {
+    columns,
+    data,
+    moreData,
+    count,
+    offset,
+    limit,
+    isLoadingMore,
+  } = useSelector((state) => state.events);
   const [columnsCorrect, setColumnsCorrect] = useState(columns);
   const [columnsResizeable, setColumnsResizeable] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => setColumnsCorrect(columns), [columns]);
 
   useEffect(() => {
     setColumnsResizeable(
@@ -39,16 +53,33 @@ const TableEvents = () => {
     });
   };
 
+  const fetchMoreEvents = () =>
+    dispatch(fetchMoreEventsAction(offset + limit, limit));
+
   return (
-    <div>
-      <Table
-        dataSource={data}
-        columns={columnsResizeable}
-        size="small"
-        bordered
-        pagination={false}
-        components={components}
-      />
+    <div className="table-events-component">
+      <div>
+        <Table
+          dataSource={[...data, ...moreData]}
+          columns={columnsResizeable}
+          size="small"
+          bordered
+          pagination={false}
+          components={components}
+        />
+        {data.length + moreData.length < count && (
+          <div className="more">
+            <Button type="primary" onClick={fetchMoreEvents}>
+              {isLoadingMore ? (
+                <Spin indicator={<LoadingOutlined spin />} />
+              ) : (
+                "Показать еще"
+              )}
+            </Button>
+            {data.length + moreData.length} <span>из</span> {count}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
