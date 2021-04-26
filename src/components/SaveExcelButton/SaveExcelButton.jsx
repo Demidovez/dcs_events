@@ -1,7 +1,6 @@
 import ReactExport from "react-data-export";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import "./SaveExcelButton.scss";
 import downloadIcon from "../../assets/download.svg";
 
 const ExcelFile = ReactExport.ExcelFile;
@@ -54,11 +53,9 @@ const SaveExcelButton = () => {
   }, [columns, data]);
 
   return (
-    <div className="save-excel-button-component">
-      <ExcelFile element={<img src={downloadIcon} alt="" />} filename="События">
-        <ExcelSheet dataSet={dataSet} name="События" />
-      </ExcelFile>
-    </div>
+    <ExcelFile element={<img src={downloadIcon} alt="" />} filename="События">
+      <ExcelSheet dataSet={dataSet} name="События" />
+    </ExcelFile>
   );
 };
 

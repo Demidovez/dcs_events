@@ -23,35 +23,31 @@ const TableEvents = () => {
     isLoadingMore,
   } = useSelector((state) => state.events);
   const [columnsCorrect, setColumnsCorrect] = useState(columns);
-  const [columnsResizeable, setColumnsResizeable] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => setColumnsCorrect(columns), [columns]);
 
-  useEffect(() => {
-    setColumnsResizeable(
-      columnsCorrect.map((col, index) => ({
-        ...col,
-        onHeaderCell: (column) => ({
-          width: column.width,
-          onResize: handleResize(index),
-        }),
-      }))
-    );
-  }, [columnsCorrect]);
-
   const handleResize = (index) => (e, { size }) => {
-    setColumnsCorrect((columns) => {
-      const nextColumns = [...columns];
+    const nextColumns = [...columns];
 
-      nextColumns[index] = {
-        ...nextColumns[index],
-        width: size.width,
-      };
+    console.log(2);
 
-      return nextColumns;
-    });
+    nextColumns[index] = {
+      ...nextColumns[index],
+      width: size.width,
+    };
+
+    setColumnsCorrect(nextColumns);
   };
+
+  console.log(1);
+  const columnsResizeable = columnsCorrect.map((col, index) => ({
+    ...col,
+    onHeaderCell: (column) => ({
+      width: column.width,
+      onResize: handleResize(index),
+    }),
+  }));
 
   const fetchMoreEvents = () =>
     dispatch(fetchMoreEventsAction(offset + limit, limit));

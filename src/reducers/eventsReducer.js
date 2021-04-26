@@ -10,7 +10,7 @@ export const RESULT = {
 const initialState = {
   isLoading: false,
   isLoadingMore: false,
-  variant: "default",
+  variant: null,
   columns: [],
   data: [],
   moreData: [],

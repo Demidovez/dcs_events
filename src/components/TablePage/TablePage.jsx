@@ -71,26 +71,29 @@ const TablePage = () => {
               </div>
               <div>
                 <p>Варианты:</p>
-                <Select value={variant} allowClear onChange={onSelectVariant}>
-                  <Option value="default">По умолчанию</Option>
+                <Select
+                  value={variant || undefined}
+                  allowClear
+                  onChange={onSelectVariant}
+                >
                   <Option value="byppas">Байпасы</Option>
                   <Option value="hvac">Вентиляция</Option>
                   <Option value="change">Операторы</Option>
                 </Select>
               </div>
-              <Button shape="circle" onClick={onResetOptions}>
+              <Button onClick={onResetOptions} disabled>
                 <img src={closeIcon} alt="" className="close" />
               </Button>
-              <Button shape="circle" onClick={onReload}>
+              <Button onClick={onReload}>
                 <img src={reloadIcon} alt="" />
               </Button>
-              <Button shape="circle">
+              <Button>
                 <img src={saveIcon} alt="" />
               </Button>
-              <Button shape="circle">
+              <Button>
                 <SaveExcelButton />
               </Button>
-              <Button shape="circle">
+              <Button>
                 <img src={settingIcon} alt="" />
               </Button>
             </div>

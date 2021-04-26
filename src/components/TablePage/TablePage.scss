@@ -54,25 +54,39 @@
         width: 120px;
         color: inherit;
         border-radius: 6px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        border: none;
       }
 
       & > button {
-        background-color: transparent;
         border: none;
         margin-left: 10px;
+        border-radius: 6px;
+        padding: 0 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
 
-        & > img {
-          width: 22px;
-          height: 22px;
+        &[disabled] {
+          opacity: 0.7;
+          background-color: white;
+
+          img {
+            opacity: 0.5;
+          }
+        }
+
+        img {
+          width: 16px;
+          height: 16px;
           opacity: 0.7;
           transition: all 0.2s ease-in;
+
           &:hover {
             opacity: 1;
           }
 
           &.close {
-            width: 20px;
-            height: 20px;
+            width: 15px;
+            height: 15px;
           }
         }
       }
