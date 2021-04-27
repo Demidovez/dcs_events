@@ -13,7 +13,7 @@ const ResizableTitle = (props) => {
   }
 
   const handleMouseUp = (e, { size }) => {
-    console.log("handleMouseUp: " + e);
+    // console.log("handleMouseUp: " + e);
 
     dispatch(onMouseUpAction());
   };
