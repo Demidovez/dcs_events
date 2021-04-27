@@ -38,3 +38,7 @@ export const setVariantAction = (variant) => ({
 export const resetOptionsAction = () => ({
   type: Actions.RESET_OPTIONS,
 });
+
+export const onMouseUpAction = () => ({
+  type: Actions.ON_MOUSE_UP,
+});

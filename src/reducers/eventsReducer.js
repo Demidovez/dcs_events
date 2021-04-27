@@ -17,6 +17,7 @@ const initialState = {
   count: 0,
   limit: 50,
   offset: 0,
+  isMouseUp: false,
 };
 
 const problemsReducer = (state = initialState, action) => {
@@ -70,6 +71,11 @@ const problemsReducer = (state = initialState, action) => {
         variant: initialState.variant,
         limit: initialState.limit,
         offset: initialState.offset,
+      };
+    case Actions.ON_MOUSE_UP:
+      return {
+        ...state,
+        isMouseUp: Math.random(),
       };
     default:
       return state;

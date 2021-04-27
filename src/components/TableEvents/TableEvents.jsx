@@ -21,33 +21,43 @@ const TableEvents = () => {
     offset,
     limit,
     isLoadingMore,
+    isMouseUp,
   } = useSelector((state) => state.events);
   const [columnsCorrect, setColumnsCorrect] = useState(columns);
+  const [columnsResizeable, setColumnsResizeable] = useState(columns);
+  const [columnsResult, setColumnsResult] = useState(columns);
   const dispatch = useDispatch();
 
   useEffect(() => setColumnsCorrect(columns), [columns]);
 
-  const handleResize = (index) => (e, { size }) => {
-    const nextColumns = [...columns];
+  useEffect(() => {
+    setColumnsResizeable(
+      columnsCorrect.map((col, index) => ({
+        ...col,
+        onHeaderCell: (column) => ({
+          width: column.width,
+          onResize: handleResize(index),
+        }),
+      }))
+    );
+  }, [columnsCorrect]);
 
-    console.log(2);
+  useEffect(() => {
+    setColumnsResult(columnsResizeable);
+  }, [isMouseUp]);
+
+  const handleResize = (index) => (e, { size }) => {
+    const nextColumns = [...columnsResult];
+
+    // console.log(size);
 
     nextColumns[index] = {
       ...nextColumns[index],
-      width: size.width,
+      width: nextColumns[index].width + e.offsetX,
     };
 
     setColumnsCorrect(nextColumns);
   };
-
-  console.log(1);
-  const columnsResizeable = columnsCorrect.map((col, index) => ({
-    ...col,
-    onHeaderCell: (column) => ({
-      width: column.width,
-      onResize: handleResize(index),
-    }),
-  }));
 
   const fetchMoreEvents = () =>
     dispatch(fetchMoreEventsAction(offset + limit, limit));
@@ -57,7 +67,7 @@ const TableEvents = () => {
       <div>
         <Table
           dataSource={[...data, ...moreData]}
-          columns={columnsResizeable}
+          columns={columnsResult.length ? columnsResult : columnsResizeable}
           size="small"
           bordered
           pagination={false}
