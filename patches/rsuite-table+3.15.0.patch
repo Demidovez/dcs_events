@@ -1,0 +1,12 @@
+diff --git a/node_modules/rsuite-table/es/constants.js b/node_modules/rsuite-table/es/constants.js
+index 081e0c7..4a05a6d 100644
+--- a/node_modules/rsuite-table/es/constants.js
++++ b/node_modules/rsuite-table/es/constants.js
+@@ -1,4 +1,4 @@
+ export var LAYER_WIDTH = 30;
+ export var SCROLLBAR_MIN_WIDTH = 14;
+ export var SCROLLBAR_WIDTH = 10;
+-export var CELL_PADDING_HEIGHT = 26;
+\ No newline at end of file
++export var CELL_PADDING_HEIGHT = 14;
+\ No newline at end of file

@@ -1,6 +1,108 @@
 .table-events-component {
-  .ant-table-wrapper {
+  .rs-table-body-wheel-area {
+    .rs-table-row:nth-child(even) .rs-table-cell {
+      background-color: #f1f2f3;
+      border-color: #dedede;
+    }
+  }
+  .rs-table {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+    border-radius: 6px;
+
+    &.not-found {
+      min-height: 500px;
+
+      .rs-table-body-row-wrapper {
+        min-height: 460px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .not-found-icon {
+          text-align: center;
+
+          img {
+            width: 150px;
+          }
+
+          p {
+            color: gray;
+            margin-top: 20px;
+            font-size: 19px;
+            font-weight: 100;
+          }
+        }
+      }
+    }
+  }
+
+  .rs-table-cell-header-icon-sort,
+  .rs-table-cell-header-icon-sort-asc::after,
+  .rs-table-cell-header-icon-sort-desc::after {
+    color: white;
+  }
+
+  .rs-table-row-header,
+  .rs-table-hover .rs-table-row-header:hover .rs-table-cell-group {
+    background-color: #3498ff;
+
+    .rs-table-cell {
+      background-color: #3498ff;
+    }
+  }
+
+  .rs-table:not(.rs-table-column-resizing)
+    .rs-table-cell-header
+    .rs-table-cell:hover
+    ~ .rs-table-column-resize-spanner,
+  .rs-table:not(.rs-table-column-resizing)
+    .rs-table-column-resize-spanner:hover,
+  .rs-table-mouse-area,
+  .rs-table-mouse-area > span {
+    background-color: #000000;
+  }
+  .rs-table-mouse-area > span {
+    left: -1px;
+  }
+
+  .rs-table-cell-header {
+    font-weight: 400;
+    color: white;
+
+    .rs-table-column-resize-spanner {
+      border-left-color: #3498ff;
+
+      &::before {
+        border-color: transparent #000000 transparent transparent;
+      }
+
+      &::after {
+        border-color: transparent transparent transparent #000000;
+      }
+    }
+
+    .rs-table-cell-content {
+      font-size: 14px;
+    }
+  }
+
+  .rs-table-cell-content {
+    font-size: 14px;
+    padding: 7px 10px;
+
+    .rs-table-cell-wrap div + div {
+      color: gray;
+      font-size: 13px;
+      font-weight: 100;
+    }
+
+    .date-field {
+      font-weight: 600;
+
+      span:first-child {
+        margin-right: 10px;
+      }
+    }
   }
 
   .more {
@@ -14,14 +116,6 @@
       border-radius: 6px;
       height: 37px;
       min-width: 125px;
-
-      & > .ant-spin {
-        color: white;
-
-        span {
-          margin-top: 3px;
-        }
-      }
     }
 
     & > span {
@@ -29,45 +123,7 @@
     }
   }
 
-  padding: 1rem;
-  .table {
-    display: block;
-    max-width: 100%;
-
-    border-spacing: 0;
-    border: 1px solid black;
-    .tr {
-      :last-child {
-        .td {
-          border-bottom: 0;
-        }
-      }
-    }
-    .th,
-    .td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
-      position: relative;
-      :last-child {
-        border-right: 0;
-      }
-      .resizer {
-        display: inline-block;
-        background: blue;
-        width: 10px;
-        height: 100%;
-        position: absolute;
-        right: 0;
-        top: 0;
-        transform: translateX(50%);
-        z-index: 1;
-        touch-action: none;
-        &.isResizing {
-          background: red;
-        }
-      }
-    }
+  .rs-table-row-header {
+    background-color: inherit;
   }
 }

@@ -1,18 +1,18 @@
 import Actions from "../types/eventsActionTypes";
 
-export const fetchEventsAction = (offset, limit, variant) => ({
+export const fetchEventsAction = (fetchData) => ({
   type: Actions.FETCH_EVENTS,
-  payload: { offset, limit, variant },
+  payload: { ...fetchData, offset: 0, queryTime: new Date() },
 });
 
-export const fetchMoreEventsAction = (offset, limit) => ({
+export const fetchMoreEventsAction = (fetchData) => ({
   type: Actions.FETCH_MORE_EVENTS,
-  payload: { offset, limit },
+  payload: fetchData,
 });
 
-export const setEventsAction = (columns, data, count) => ({
+export const setEventsAction = (data, count) => ({
   type: Actions.SET_EVENTS,
-  payload: { columns, data, count },
+  payload: { data, count },
 });
 
 export const setMoreEventsAction = (data) => ({
@@ -25,11 +25,6 @@ export const setLimitAction = (limit) => ({
   payload: limit,
 });
 
-export const setOffsetAction = (offset) => ({
-  type: Actions.SET_OFFSET,
-  payload: offset,
-});
-
 export const setVariantAction = (variant) => ({
   type: Actions.SET_VARIANT,
   payload: variant,
@@ -39,6 +34,12 @@ export const resetOptionsAction = () => ({
   type: Actions.RESET_OPTIONS,
 });
 
-export const onMouseUpAction = () => ({
-  type: Actions.ON_MOUSE_UP,
+export const updateColumnsOfTableAction = (columns) => ({
+  type: Actions.UPDATE_COLUMNS,
+  payload: columns,
+});
+
+export const setSortDatasAction = (sortColumn, sortType) => ({
+  type: Actions.SET_SORT_DATA,
+  payload: { sortColumn, sortType },
 });

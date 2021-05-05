@@ -1,22 +1,22 @@
-import { Row, Col } from "antd";
+import { FlexboxGrid } from "rsuite";
 import { Switch, Route } from "react-router-dom";
 import TablePage from "./components/TablePage/TablePage";
-import "antd/dist/antd.css";
+import "rsuite/dist/styles/rsuite-default.css";
 import "./assets/fonts.css";
 import "./App.scss";
 
 const App = () => {
   return (
     <div className="app-component">
-      <Row>
-        <Col span={2}></Col>
-        <Col span={20}>
+      <FlexboxGrid>
+        <FlexboxGrid.Item colspan={2}></FlexboxGrid.Item>
+        <FlexboxGrid.Item colspan={20}>
           <Switch>
             <Route path="/" component={TablePage} />
           </Switch>
-        </Col>
-        <Col span={2}></Col>
-      </Row>
+        </FlexboxGrid.Item>
+        <FlexboxGrid.Item colspan={2}></FlexboxGrid.Item>
+      </FlexboxGrid>
     </div>
   );
 };

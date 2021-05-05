@@ -1,5 +1,4 @@
-import { Select, Spin, Button } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Button, SelectPicker, Loader } from "rsuite";
 import "./TablePage.scss";
 import closeIcon from "../../assets/close.svg";
 import reloadIcon from "../../assets/reload.svg";
@@ -14,22 +13,34 @@ import {
   resetOptionsAction,
 } from "../../actions/creators/eventsActionCreators";
 import { useDispatch, useSelector } from "react-redux";
+import { formatNumber } from "../../helpers";
 import { useEffect } from "react";
-const { Option } = Select;
 
 const TablePage = () => {
-  const { data, count, limit, offset, isLoading, variant } = useSelector(
-    (state) => state.events
-  );
+  const {
+    count,
+    limit,
+    isLoading,
+    variant,
+    sortColumn,
+    sortType,
+    limitList,
+    variantList,
+  } = useSelector((state) => state.events);
   const dispatch = useDispatch();
 
   // eslint-disable-next-line
-  useEffect(() => dispatch(fetchEventsAction(offset, limit, variant)), [
-    limit,
-    variant,
-  ]);
+  useEffect(() => onReload(), [limit, sortColumn, sortType, variant]);
 
-  const onReload = () => dispatch(fetchEventsAction(offset, limit, variant));
+  const onReload = () =>
+    dispatch(
+      fetchEventsAction({
+        limit,
+        variant,
+        sortColumn,
+        sortType,
+      })
+    );
 
   const onSelectLimit = (limit) => dispatch(setLimitAction(parseInt(limit)));
 
@@ -39,72 +50,59 @@ const TablePage = () => {
 
   return (
     <div className="table-page-component">
-      <h1>События системы APKS</h1>
-      {data.length ? (
-        <div>
-          <div className="controls">
-            <div className="count-found">
-              {isLoading ? (
-                <span>
-                  <Spin indicator={<LoadingOutlined spin />} /> Загрузка...
-                </span>
-              ) : (
-                "Найденно: " + count
-              )}
-            </div>
-            <div className="buttons">
+      <div>
+        <div className="controls">
+          <div className="count-found">
+            {isLoading ? (
+              <span>
+                <Loader /> Загрузка...
+              </span>
+            ) : count ? (
               <div>
-                <p>Показать по:</p>
-                <Select
-                  value={limit}
-                  className="show-count"
-                  showArrow={false}
-                  onChange={onSelectLimit}
-                >
-                  <Option value="50">50</Option>
-                  <Option value="100">100</Option>
-                  <Option value="150">150</Option>
-                  <Option value="200">200</Option>
-                  <Option value="250">250</Option>
-                  <Option value="300">300</Option>
-                </Select>
+                <span>Найденно: </span> {formatNumber(count)}
               </div>
-              <div>
-                <p>Варианты:</p>
-                <Select
-                  value={variant || undefined}
-                  allowClear
-                  onChange={onSelectVariant}
-                >
-                  <Option value="byppas">Байпасы</Option>
-                  <Option value="hvac">Вентиляция</Option>
-                  <Option value="change">Операторы</Option>
-                </Select>
-              </div>
-              <Button onClick={onResetOptions} disabled>
-                <img src={closeIcon} alt="" className="close" />
-              </Button>
-              <Button onClick={onReload}>
-                <img src={reloadIcon} alt="" />
-              </Button>
-              <Button>
-                <img src={saveIcon} alt="" />
-              </Button>
-              <Button>
-                <SaveExcelButton />
-              </Button>
-              <Button>
-                <img src={settingIcon} alt="" />
-              </Button>
-            </div>
+            ) : null}
           </div>
-          <TableEvents />
+          <div className="buttons">
+            <div className="show-count">
+              <p>Показать по:</p>
+              <SelectPicker
+                data={limitList}
+                value={"" + limit}
+                onChange={onSelectLimit}
+                searchable={false}
+                cleanable={false}
+              />
+            </div>
+            <div>
+              <p>Варианты:</p>
+              <SelectPicker
+                data={variantList}
+                value={variant}
+                onChange={onSelectVariant}
+                placeholder="Все"
+                searchable={false}
+              />
+            </div>
+            <Button onClick={onResetOptions} disabled>
+              <img src={closeIcon} alt="" className="close" />
+            </Button>
+            <Button onClick={onReload}>
+              <img src={reloadIcon} alt="" />
+            </Button>
+            <Button>
+              <img src={saveIcon} alt="" />
+            </Button>
+            <Button disabled={!count}>
+              <SaveExcelButton />
+            </Button>
+            <Button>
+              <img src={settingIcon} alt="" />
+            </Button>
+          </div>
         </div>
-      ) : (
-        <div className="loader">
-          <Spin indicator={<LoadingOutlined spin />} />
-        </div>
-      )}
+        <TableEvents />
+      </div>
     </div>
   );
 };

@@ -1,17 +1,24 @@
 .table-page-component {
+  margin-top: 20px;
   margin-bottom: 40px;
-
-  h1 {
-    margin-top: 15px;
-    font-size: 20px;
-  }
 
   .loader {
     margin: 100px 0;
     text-align: center;
 
-    span {
-      font-size: 45px;
+    .rs-loader {
+      height: inherit;
+
+      span {
+        &::before {
+          border-color: transparent;
+        }
+
+        &::after {
+          border-width: 3px;
+          border-color: #0078f5cc transparent transparent;
+        }
+      }
     }
   }
 
@@ -26,11 +33,24 @@
       margin-bottom: 0;
       color: gray;
       display: inline-block;
+
+      span {
+        margin-right: 10px;
+      }
     }
 
     .count-found {
-      .ant-spin {
-        margin-right: 10px;
+      .rs-loader-wrapper {
+        vertical-align: sub;
+
+        .rs-loader-spin::before {
+          border-color: transparent;
+        }
+
+        .rs-loader-spin::after {
+          border-width: 2px;
+          border-color: #0078f5cc transparent transparent;
+        }
       }
     }
 
@@ -41,33 +61,53 @@
 
       & > div {
         margin-left: 20px;
-      }
 
-      .show-count {
-        .ant-select-selector {
-          width: 50px;
+        & + button {
+          margin-left: 40px;
         }
       }
 
-      .ant-select-selector {
+      .show-count {
+        .rs-picker-select {
+          width: 50px;
+
+          .rs-picker-toggle-caret {
+            display: none;
+          }
+
+          .rs-picker-toggle.rs-btn {
+            padding-right: 14px;
+          }
+
+          .rs-picker-toggle-value {
+            text-align: center;
+          }
+        }
+      }
+
+      .rs-picker-select {
         margin-left: 10px;
         width: 120px;
         color: inherit;
         border-radius: 6px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
         border: none;
+
+        .rs-picker-toggle {
+          border: none;
+        }
       }
 
       & > button {
         border: none;
         margin-left: 10px;
         border-radius: 6px;
-        padding: 0 10px;
+        padding: 6px 10px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+        background-color: white;
 
-        &[disabled] {
+        &.rs-btn-disabled {
           opacity: 0.7;
-          background-color: white;
 
           img {
             opacity: 0.5;

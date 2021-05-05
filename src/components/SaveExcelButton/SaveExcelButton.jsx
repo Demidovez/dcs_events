@@ -35,7 +35,7 @@ const SaveExcelButton = () => {
         columns: columnsResizeable,
         data: data.map((row) =>
           columnsResizeable.map(({ key }) => ({
-            value: row[key],
+            value: row[key] || "",
             style: {
               border: {
                 top: { style: "thin", color: { rgb: "000000" } },
