@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@szhsin/react-menu": "^1.10.0",
     "axios": "^0.21.0",
     "formik": "^2.2.6",
     "node-sass": "4.14.1",
@@ -11,7 +12,6 @@
     "postinstall-postinstall": "^2.1.0",
     "react": "^17.0.2",
     "react-app-rewired": "^2.1.8",
-    "react-contexify": "^5.0.0",
     "react-data-export": "^0.6.0",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.2",

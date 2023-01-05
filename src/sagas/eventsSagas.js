@@ -7,9 +7,9 @@ import {
 } from "../actions/creators/eventsActionCreators";
 
 function* workerFetchEvents(action) {
-  const { data, count } = yield call(fetchEvents, action.payload);
+  const { data } = yield call(fetchEvents, action.payload);
 
-  yield put(setEventsAction(data, count));
+  yield put(setEventsAction(data));
 }
 
 function* workerFetchMoreEvents(action) {

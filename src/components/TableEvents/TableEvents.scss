@@ -69,6 +69,12 @@
     font-weight: 400;
     color: white;
 
+    &:first-child {
+      .rs-table-cell-content {
+        justify-content: center;
+      }
+    }
+
     .rs-table-column-resize-spanner {
       border-left-color: #3498ff;
 
@@ -83,6 +89,22 @@
 
     .rs-table-cell-content {
       font-size: 14px;
+      padding: 0px 10px;
+      display: flex;
+      align-items: center;
+
+      .header-title {
+        display: flex;
+        flex-direction: column;
+        line-height: 16px;
+
+        .sub-header-title {
+          display: inline-block;
+          font-size: 12px;
+          font-weight: 100;
+          color: #dedede;
+        }
+      }
     }
   }
 
@@ -101,6 +123,21 @@
 
       span:first-child {
         margin-right: 10px;
+      }
+    }
+
+    .rownum-field {
+      font-size: 12px;
+      line-height: 19px;
+      margin: 0 -10px;
+      text-align: center;
+    }
+
+    .station-field {
+      div {
+        color: gray;
+        font-size: 13px;
+        font-weight: 100;
       }
     }
   }

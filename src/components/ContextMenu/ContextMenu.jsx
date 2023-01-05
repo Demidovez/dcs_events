@@ -1,89 +1,73 @@
-import { useEffect } from "react";
-import {
-  Menu,
-  Item,
-  Separator,
-  Submenu,
-  useContextMenu,
-} from "react-contexify";
-import "react-contexify/dist/ReactContexify.css";
+import { useEffect, useState } from "react";
+import ContextMenuSource from "./ContextMenuSource";
+import ContextMenuDate from "./ContextMenuDate";
+import ContextMenuDescription from "./ContextMenuDescription";
+import ContextMenuCondition from "./ContextMenuCondition";
+import ContextMenuAction from "./ContextMenuAction";
+import ContextMenuUnits from "./ContextMenuUnits";
+import ContextMenuValue from "./ContextMenuValue";
+import ContextMenuStation from "./ContextMenuStation";
 import "./ContextMenu.scss";
-
-const columnsListMenu = [
-  "Time",
-  "Source",
-  "Description",
-  "ConditionName",
-  "Action",
-  "Value",
-  "Units",
-  "Station",
-];
+import { useDispatch } from "react-redux";
+import { setSortDataColumnsAction } from "../../actions/creators/eventsActionCreators";
 
 const ContextMenu = ({ event, column }) => {
-  const { show } = useContextMenu();
+  const dispath = useDispatch();
 
-  useEffect(
-    () =>
-      columnsListMenu.includes(column) &&
-      show(event, {
-        id: column,
-      }),
+  const [anchorPoint, setAnchorPoint] = useState({ x: 0, y: 0 });
 
-    [show, event, column]
-  );
+  useEffect(() => {
+    event && setAnchorPoint({ x: event.clientX, y: event.clientY });
+  }, [event]);
+
+  const saveColumnValue = (inputValue) =>
+    dispath(setSortDataColumnsAction(column, inputValue));
 
   return (
     <div className="context-menu-component">
-      <Menu id="Time">
-        <Item onClick={(d) => console.log(d)}>За сегодня</Item>
-        <Item onClick={(d) => console.log(d)}>За вчера</Item>
-        <Item onClick={(d) => console.log(d)}>За 3 дня</Item>
-        <Item onClick={(d) => console.log(d)}>За 7 дней</Item>
-        <Item onClick={(d) => console.log(d)}>За 1 месяц</Item>
-        <Item onClick={(d) => console.log(d)}>За 2 месяц</Item>
-        <Item onClick={(d) => console.log(d)}>За 3 месяца</Item>
-        <Item disabled>Выбрать</Item>
-        <Item onClick={(d) => console.log(d)}>С </Item>
-        <Item onClick={(d) => console.log(d)}>По </Item>
-        <Item disabled>Сортировка</Item>
-        <Item onClick={(d) => console.log(d)}>По возрастанию</Item>
-        <Item onClick={(d) => console.log(d)}>По убыванию</Item>
-      </Menu>
+      <ContextMenuDate anchorPoint={anchorPoint} column={column} />
 
-      <Menu id="Source">
-        <Item onClick={(d) => console.log(d)}>Регулярное</Item>
-        <Item disabled>Сортировка</Item>
-        <Item onClick={(d) => console.log(d)}>От А до Z</Item>
-        <Item onClick={(d) => console.log(d)}>От Z до A</Item>
-      </Menu>
+      <ContextMenuSource
+        anchorPoint={anchorPoint}
+        column={column}
+        onSave={saveColumnValue}
+      />
 
-      <Menu id="Description">
-        <Item onClick={(d) => console.log(d)}>Регулярное</Item>
-        <Item disabled>Сортировка</Item>
-        <Item onClick={(d) => console.log(d)}>От А до Z</Item>
-        <Item onClick={(d) => console.log(d)}>От Z до A</Item>
-      </Menu>
+      <ContextMenuDescription
+        anchorPoint={anchorPoint}
+        column={column}
+        onSave={saveColumnValue}
+      />
 
-      <Menu id="ConditionName">
-        <Item onClick={(d) => console.log(d)}>Регулярное</Item>
-      </Menu>
+      <ContextMenuCondition
+        anchorPoint={anchorPoint}
+        column={column}
+        onSave={saveColumnValue}
+      />
 
-      <Menu id="Action">
-        <Item onClick={(d) => console.log(d)}>Регулярное</Item>
-      </Menu>
+      <ContextMenuAction
+        anchorPoint={anchorPoint}
+        column={column}
+        onSave={saveColumnValue}
+      />
 
-      <Menu id="Value">
-        <Item onClick={(d) => console.log(d)}>Регулярное</Item>
-      </Menu>
+      <ContextMenuValue
+        anchorPoint={anchorPoint}
+        column={column}
+        onSave={saveColumnValue}
+      />
 
-      <Menu id="Units">
-        <Item onClick={(d) => console.log(d)}>Регулярное</Item>
-      </Menu>
+      <ContextMenuUnits
+        anchorPoint={anchorPoint}
+        column={column}
+        onSave={saveColumnValue}
+      />
 
-      <Menu id="Station">
-        <Item onClick={(d) => console.log(d)}>Регулярное</Item>
-      </Menu>
+      <ContextMenuStation
+        anchorPoint={anchorPoint}
+        column={column}
+        onSave={saveColumnValue}
+      />
     </div>
   );
 };

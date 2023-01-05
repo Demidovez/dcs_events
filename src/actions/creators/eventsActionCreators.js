@@ -2,7 +2,16 @@ import Actions from "../types/eventsActionTypes";
 
 export const fetchEventsAction = (fetchData) => ({
   type: Actions.FETCH_EVENTS,
-  payload: { ...fetchData, offset: 0, queryTime: new Date() },
+  payload: {
+    ...fetchData,
+    offset: 0,
+    timeStart: new Date().toString(),
+    timeEnd: new Date(
+      new Date(
+        new Date().setDate(new Date().getDate() - fetchData.timeMode.days)
+      ).setHours(0, 0, 0, 0)
+    ).toString(),
+  },
 });
 
 export const fetchMoreEventsAction = (fetchData) => ({
@@ -10,9 +19,9 @@ export const fetchMoreEventsAction = (fetchData) => ({
   payload: fetchData,
 });
 
-export const setEventsAction = (data, count) => ({
+export const setEventsAction = (data) => ({
   type: Actions.SET_EVENTS,
-  payload: { data, count },
+  payload: { data },
 });
 
 export const setMoreEventsAction = (data) => ({
@@ -42,4 +51,14 @@ export const updateColumnsOfTableAction = (columns) => ({
 export const setSortDatasAction = (sortColumn, sortType) => ({
   type: Actions.SET_SORT_DATA,
   payload: { sortColumn, sortType },
+});
+
+export const setSortDataColumnsAction = (column, value) => ({
+  type: Actions.SET_SORT_DATA_COLUMNS,
+  payload: { column, value },
+});
+
+export const setTimeModeAction = (value) => ({
+  type: Actions.SET_TIME_MODE,
+  payload: value,
 });

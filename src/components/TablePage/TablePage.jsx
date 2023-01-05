@@ -13,32 +13,35 @@ import {
   resetOptionsAction,
 } from "../../actions/creators/eventsActionCreators";
 import { useDispatch, useSelector } from "react-redux";
-import { formatNumber } from "../../helpers";
 import { useEffect } from "react";
 
 const TablePage = () => {
   const {
-    count,
     limit,
     isLoading,
     variant,
     sortColumn,
+    timeMode,
     sortType,
     limitList,
     variantList,
+    sortDataColumns,
+    isFiltered,
   } = useSelector((state) => state.events);
   const dispatch = useDispatch();
 
   // eslint-disable-next-line
-  useEffect(() => onReload(), [limit, sortColumn, sortType, variant]);
+  useEffect(() => onReload(), [timeMode, limit, sortColumn, sortType, variant]);
 
   const onReload = () =>
     dispatch(
       fetchEventsAction({
+        timeMode,
         limit,
         variant,
         sortColumn,
         sortType,
+        sortDataColumns,
       })
     );
 
@@ -57,10 +60,6 @@ const TablePage = () => {
               <span>
                 <Loader /> Загрузка...
               </span>
-            ) : count ? (
-              <div>
-                <span>Найденно: </span> {formatNumber(count)}
-              </div>
             ) : null}
           </div>
           <div className="buttons">
@@ -84,7 +83,7 @@ const TablePage = () => {
                 searchable={false}
               />
             </div>
-            <Button onClick={onResetOptions} disabled>
+            <Button onClick={onResetOptions} disabled={!isFiltered}>
               <img src={closeIcon} alt="" className="close" />
             </Button>
             <Button onClick={onReload}>
@@ -93,7 +92,7 @@ const TablePage = () => {
             <Button>
               <img src={saveIcon} alt="" />
             </Button>
-            <Button disabled={!count}>
+            <Button>
               <SaveExcelButton />
             </Button>
             <Button>

@@ -1,25 +1,33 @@
 import Actions from "../actions/types/eventsActionTypes";
 import columns from "./columns";
+import { getTimeMode } from "../helpers";
 
-export const RESULT = {
-  ADDED: 0,
-  ERROR: 1,
-  DELETED: 2,
-  EDITED: 3,
-};
+// const timeModeList =
 
 const initialState = {
   isLoading: false,
   isLoadingMore: false,
+  isFiltered: false,
+  isGotAllEvents: false,
   variant: null,
   data: [],
   moreData: [],
-  count: 0,
-  queryTime: 0,
+  timeMode: getTimeMode("week_1"),
+  timeStart: 0,
+  timeEnd: 0,
   offset: 50,
   limit: 50,
   sortColumn: "",
   sortType: "desc",
+  sortDataColumns: {
+    Source: "",
+    Description: "",
+    ConditionName: "",
+    Action: "",
+    Value: "",
+    Units: "",
+    Station: "",
+  },
   columns: columns,
   limitList: [
     {
@@ -71,20 +79,24 @@ const problemsReducer = (state = initialState, action) => {
         isLoading: true,
         moreData: initialState.moreData,
         offset: action.payload.offset,
-        queryTime: action.payload.queryTime,
+        timeMode: action.payload.timeMode,
+        timeStart: action.payload.timeStart,
+        timeEnd: action.payload.timeEnd,
+        isGotAllEvents: initialState.isGotAllEvents,
       };
     case Actions.FETCH_MORE_EVENTS:
       return {
         ...state,
         isLoadingMore: true,
+        isGotAllEvents: initialState.isGotAllEvents,
       };
     case Actions.SET_EVENTS:
       return {
         ...state,
         isLoading: false,
         data: action.payload.data,
-        count: action.payload.count,
         offset: state.offset + action.payload.data.length,
+        isGotAllEvents: action.payload.data.length < state.limit,
       };
     case Actions.SET_MORE_EVENTS:
       return {
@@ -92,27 +104,28 @@ const problemsReducer = (state = initialState, action) => {
         isLoadingMore: false,
         moreData: [...state.moreData, ...action.payload.data],
         offset: state.offset + action.payload.data.length,
+        isGotAllEvents: action.payload.data.length < state.limit,
       };
     case Actions.SET_LIMIT:
       return {
         ...state,
         limit: action.payload,
         offset: initialState.offset,
+        isFiltered: true,
+        isGotAllEvents: initialState.isGotAllEvents,
       };
     case Actions.SET_VARIANT:
       return {
         ...state,
         variant: action.payload,
         offset: initialState.offset,
+        isFiltered: true,
+        isGotAllEvents: initialState.isGotAllEvents,
       };
     case Actions.RESET_OPTIONS:
       return {
-        ...state,
-        moreData: initialState.moreData,
-        variant: initialState.variant,
-        limit: initialState.limit,
-        offset: initialState.offset,
-        queryTime: initialState.queryTime,
+        ...initialState,
+        data: state.data,
       };
     case Actions.UPDATE_COLUMNS:
       return {
@@ -125,7 +138,27 @@ const problemsReducer = (state = initialState, action) => {
         sortColumn: action.payload.sortColumn,
         sortType: action.payload.sortType,
         offset: initialState.offset,
+        isFiltered: true,
+        isGotAllEvents: initialState.isGotAllEvents,
       };
+    case Actions.SET_SORT_DATA_COLUMNS:
+      return {
+        ...state,
+        offset: initialState.offset,
+        isFiltered: true,
+        sortDataColumns: {
+          ...state.sortDataColumns,
+          [action.payload.column]: action.payload.value,
+        },
+        isGotAllEvents: initialState.isGotAllEvents,
+      };
+    case Actions.SET_TIME_MODE:
+      return {
+        ...state,
+        timeMode: getTimeMode(action.payload),
+        isFiltered: true,
+      };
+
     default:
       return state;
   }
